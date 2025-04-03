@@ -1,0 +1,104 @@
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <style>
+     body {
+      background-color: #f4f4f4;
+      font-family: Arial, sans-serif;
+  }
+  
+  .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-top: 80px; /* Ajout de marge pour éviter que le header cache le titre */
+      max-width: 600px; /* Réduction de la largeur */
+  }
+  
+  h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #0056b3;
+  }
+  
+  .form-control, .form-select {
+      border-radius: 8px;
+      max-width: 100%; /* Empêche les champs d’être trop larges */
+  }
+  
+  .btn-primary, .btn-secondary {
+      width: 100%;
+      border-radius: 8px;
+      padding: 10px;
+      transition: 0.3s;
+  }
+  
+  .btn-primary {
+      background-color: #007bff;
+      border: none;
+  }
+  
+  .btn-primary:hover {
+      background-color: #0056b3;
+  }
+  
+  .btn-secondary {
+      background-color: #6c757d;
+      border: none;
+  }
+  
+  .btn-secondary:hover {
+      background-color: #5a6268;
+  }
+  
+    </style>
+  </head>
+  <app-header></app-header>
+  <body>
+    
+    <div class="container">
+      <h1>Créer un Bon de Livraison</h1>
+      <form [formGroup]="blForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="numBL" class="form-label">Numéro du Bon de Livraison</label>
+          <input type="text" id="numBL" formControlName="numBL" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label for="dateReception" class="form-label">Date de Réception</label>
+          <input type="date" id="dateReception" formControlName="dateReception" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label for="idFournisseur" class="form-label">Fournisseur</label>
+          <select id="idFournisseur" formControlName="idFournisseur" class="form-select" required>
+            <option *ngFor="let fournisseur of fournisseurs" [value]="fournisseur.idFournisseur">
+              {{ fournisseur.nomFournisseur }}
+            </option>
+          </select>
+        </div>
+        <div formArrayName="produits">
+          <div *ngFor="let produit of produitsFormArray.controls; let i = index" [formGroupName]="i" class="mb-3 p-3 border rounded">
+            <div class="mb-3">
+              <label for="idProduit" class="form-label">Produit</label>
+              <select id="idProduit" formControlName="idProduit" class="form-select" required>
+                <option *ngFor="let produit of produits" [value]="produit.idProduit">
+                  {{ produit.nom }}
+                </option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="quantité" class="form-label">Quantité</label>
+              <input type="number" id="quantité" formControlName="quantité" class="form-control" min="1" required>
+            </div>
+          </div>
+        </div>
+        <button type="button" (click)="addProduit()" class="btn btn-secondary w-100 mb-3">Ajouter un produit</button>
+        <button type="submit" [disabled]="!blForm.valid" class="btn btn-primary w-100">Créer le Bon de Livraison</button>
+      </form>
+    </div>
+  </body>
+  

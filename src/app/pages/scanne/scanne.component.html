@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contrôle Qualité</title>
+    
+</head>
+
+<body>
+
+    <div class="container">
+        <app-header></app-header>
+
+        <!-- Section Scan -->
+        <div class="scan-section">
+            <input type="text" placeholder="Scanner ou entrer la référence du produit" [(ngModel)]="reference" class="scan-input" />
+            <button class="btn-rechercher" (click)="rechercherProduit()">Rechercher</button>
+        </div>
+
+        <!-- Section Informations Produit -->
+        <div class="left-section" *ngIf="produit">
+            <h3>Informations Produit</h3>
+            <p><strong>Désignation :</strong> {{ produit.nom }}</p>
+            <p><strong>Fournisseur :</strong> {{ produit.fournisseur?.nomFournisseur }}</p>
+
+            <h3>Plan de Contrôle</h3>
+            <table *ngIf="plansDeControle.length > 0">
+                <thead>
+                    <tr>
+                        <th>Caractéristique</th>
+                        <th>Donnée Technique</th>
+                        <th>Tolérance</th>
+                        <th>Fréquence et Taille de Prélèvement</th>
+                        <th>Visuel</th>
+                        <th>Valeur Mesurée</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let plan of plansDeControle">
+                        <td>{{ plan.caracteristique }}</td>
+                        <td>{{ plan.donneeTechnique }}</td>
+                        <td>{{ plan.tolerance }}</td>
+                        <td>{{ plan.frequenceEtTailleDePrelevement }}</td>
+                        <td>
+                            <select [(ngModel)]="plan.visuel" (change)="validateVisuel(plan)">
+                                <option value="Conforme">Conforme</option>
+                                <option value="Non Conforme">Non Conforme</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="text" placeholder="Entrer la valeur" [(ngModel)]="plan.valeurMesuree"
+                                [ngClass]="{
+                                    'valid': plan.isValid === true, 
+                                    'invalid': plan.isValid === false
+                                }" (input)="validateValue(plan)" />
+                           
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button *ngIf="produit && plansDeControle.length > 0" type="button" class="btn-suivant" (click)="openModal()">Suivant</button>
+
+        <!-- Modal de validation -->
+        <div id="validationModal" class="modal">
+            <div class="modal-content">
+                <span class="close" (click)="closeModal()">&times;</span>
+                <h3>Validation du Contrôle</h3>
+
+                <form>
+                    <div class="form-group">
+                        <label>Référence Produit</label>
+                        <input type="text" name="reference" [value]="produit?.reference || ''" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Fournisseur</label>
+                        <input type="text" name="fournisseur" [value]="produit?.fournisseur?.nomFournisseur || ''" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Vérificateur</label>
+                        <input type="text" name="verificateur" [value]="verificateur" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Numéro BL</label>
+                        <input type="text" name="numBL" [(ngModel)]="numBL" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date de Contrôle</label>
+                        <input type="text" name="dateDeControle" [value]="dateDeControle" disabled>
+                    </div>
+
+                    <button type="submit" class="btn btn-success" (click)="enregistrerControle()">Enregistrer</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

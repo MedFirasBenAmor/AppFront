@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Liste des Produits</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        /* Personnaliser les couleurs des boutons */
+        .btn-info {
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        /* Modifier le bouton Modifier avec un bleu foncé */
+        .btn-primary {
+            background-color: #0056b3;
+            /* Bleu foncé */
+            border-color: #0056b3;
+            /* Bleu foncé */
+        }
+
+        /* Remplacer btn-danger par un gris clair pour le bouton Supprimer */
+        .btn-danger {
+            background-color: #6c757d;
+            /* Gris clair */
+            border-color: #6c757d;
+            /* Gris clair */
+        }
+
+        /* Ajouter un effet de survol pour les boutons */
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Optionnel : changer la couleur de fond du tableau pour un meilleur contraste */
+        table {
+            background-color: #f8f9fa;
+        }
+
+        /* Pour le tableau dans le modal, ajouter une barre de défilement horizontale */
+        .modal-body {
+            max-width: 100%;
+            overflow-x: auto;
+            /* Ajoute un scroll horizontal si nécessaire */
+        }
+
+        /* Limiter la taille des champs de saisie pour éviter qu'ils ne débordent */
+        .form-control {
+            max-width: 100%;
+            /* S'assure que chaque champ s'ajuste bien */
+        }
+
+        /* Ajuster le modal pour une meilleure largeur sur les écrans plus petits */
+        .modal-dialog {
+            max-width: 90%;
+            /* Réduit la largeur du modal pour les écrans plus petits */
+            width: auto;
+        }
+
+        .modal.fade.show {
+            display: block !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <app-header></app-header>
+    <app-sidebar></app-sidebar>
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>Plan de Contrôle</h1>
+        </div><!-- End Page Title -->
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+
+
+                            <!-- Modal pour ajouter un plan de contrôle -->
+                            <div *ngIf="isModalOpen" class="modal fade show d-block" id="planModal" tabindex="-1"
+                                aria-labelledby="planModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="planModalLabel">Ajouter un Plan de Contrôle</h5>
+                                            <button type="button" class="btn-close" (click)="closeModal()"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Formulaire dynamique -->
+                                            <form #planForm="ngForm">
+                                                <table class="table">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th scope="col">Caractéristique</th>
+                                                            <th scope="col">Donnée Technique</th>
+                                                            <th scope="col">Tolérance (+/-)</th>
+                                                            <th scope="col">Fréquence et Taille de Prélèvement</th>
+                                                            <th scope="col">Moyen de Contrôle</th>
+                                                            <th scope="col">Méthode de Contrôle</th>
+                                                            <th scope="col">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let ligne of planDeControleLignes; let i = index">
+                                                            <td><input type="text" [(ngModel)]="ligne.caracteristique"
+                                                                    name="caracteristique{{i}}" class="form-control"
+                                                                    required></td>
+                                                            <td><input type="text" [(ngModel)]="ligne.donneeTechnique"
+                                                                    name="donneeTechnique{{i}}" class="form-control"
+                                                                    required></td>
+                                                            <td><input type="text" [(ngModel)]="ligne.tolerance"
+                                                                    name="tolerance{{i}}" class="form-control" required>
+                                                            </td>
+                                                            <td><input type="text"
+                                                                    [(ngModel)]="ligne.frequenceEtTailleDePrelevement"
+                                                                    name="frequence{{i}}" class="form-control" required>
+                                                            </td>
+                                                            <td><input type="text" [(ngModel)]="ligne.moyenDeControle"
+                                                                    name="moyenDeControle{{i}}" class="form-control"
+                                                                    required></td>
+                                                            <td><input type="text" [(ngModel)]="ligne.methodeDeControle"
+                                                                    name="methodeDeControle{{i}}" class="form-control"
+                                                                    required></td>
+                                                            <td><button type="button" class="btn btn-danger"
+                                                                    (click)="supprimerLigne(i)">Supprimer</button></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="btn btn-secondary"
+                                                    (click)="ajouterLigne()">+ Ajouter une ligne</button>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                (click)="closeModal()">Fermer</button>
+                                            <button type="button" class="btn btn-primary"
+                                                (click)="enregistrerPlan()">Enregistrer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="d-flex justify-content-start">
+                                <button class="btn btn-secondary btn-retour" (click)="goBack()">
+                                    <i class="bi bi-arrow-return-left"></i> Retour
+                                </button>
+                            </div>
+                            
+                            <div class="d-flex justify-content-end mb-3">
+                                <!-- Bouton Ajouter un Plan de Contrôle -->
+                                <button (click)="openModal()" class="btn btn-info">Ajouter un Plan de Contrôle</button>
+                            </div>
+                            <!-- Card with an image on left -->
+                            <div class="card mb-3" id="planControleCard">
+                                <div class="row g-0">
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <p class="card-title mt-4"> Désignation du composant : {{ produit.nom }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <img *ngIf="produit.imagePath" [src]="'http://localhost:8080' + produit.imagePath"
+                                            class="img-fluid rounded-start" alt="Image du produit">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Default Table -->
+                            <table id="planControleTable" class="table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Caractéristique</th>
+                                        <th scope="col">Donnée Technique</th>
+                                        <th scope="col">Tolérance</th>
+                                        <th scope="col">Fréquence et taille de prélèvement</th>
+                                        <th scope="col">Moyen de contôle</th>
+                                        <th scope="col">Méthode de contôle</th>
+
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let plan of plans; let i = index">
+                                        <th scope="row">{{ i + 1 }}</th>
+
+                                        <td>{{ plan.caracteristique }}</td>
+                                        <td>{{ plan.donneeTechnique }}</td>
+                                        <td>{{ plan.tolerance }}</td>
+                                        <td>{{ plan.frequenceEtTailleDePrelevement }}</td>
+                                        <td>{{ plan.moyenDeControle }}</td>
+                                        <td>{{ plan.methodeDeControle }}</td>
+
+                                        <td>
+
+                                            <button type="button" class="btn btn-primary"
+                                                (click)="openModifyModal(plan)">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-danger"
+                                                (click)="supprimerPlan(plan.id)">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- End Default Table Example -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Modal pour modifier un plan de contrôle -->
+        <div *ngIf="isModalModifyOpen" class="modal fade show d-block" id="modifyPlanModal" tabindex="-1"
+            aria-labelledby="modifyPlanModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modifyPlanModalLabel">Modifier un Plan de Contrôle</h5>
+                        <button type="button" class="btn-close" (click)="closeModifyModal()"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form #modifyPlanForm="ngForm">
+                            <table class="table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th scope="col">Caractéristique</th>
+                                        <th scope="col">Donnée Technique</th>
+                                        <th scope="col">Tolérance (+/-)</th>
+                                        <th scope="col">Fréquence et Taille de Prélèvement</th>
+                                        <th scope="col">Moyen de Contrôle</th>
+                                        <th scope="col">Méthode de Contrôle</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" [(ngModel)]="selectedPlan.caracteristique"
+                                                name="caracteristique" class="form-control" required></td>
+                                        <td><input type="text" [(ngModel)]="selectedPlan.donneeTechnique"
+                                                name="donneeTechnique" class="form-control" required></td>
+                                        <td><input type="text" [(ngModel)]="selectedPlan.tolerance" name="tolerance"
+                                                class="form-control" required></td>
+                                        <td><input type="text" [(ngModel)]="selectedPlan.frequenceEtTailleDePrelevement"
+                                                name="frequence" class="form-control" required></td>
+                                        <td><input type="text" [(ngModel)]="selectedPlan.moyenDeControle"
+                                                name="moyenDeControle" class="form-control" required></td>
+                                        <td><input type="text" [(ngModel)]="selectedPlan.methodeDeControle"
+                                                name="methodeDeControle" class="form-control" required></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="closeModifyModal()">Fermer</button>
+                        <button type="button" class="btn btn-primary" (click)="modifierPlan()">Enregistrer les
+                            changements</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </main><!-- End #main -->
+
+    <app-footer></app-footer>
+
+</body>
+
+</html>

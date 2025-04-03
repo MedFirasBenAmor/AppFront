@@ -1,0 +1,10 @@
+/* Assurer que le modal est bien centré et plus large */
+.modal-lg {
+    max-width: 30%; /* Ajuster la largeur du modal */
+  }
+  
+  /* Empêcher le scroll de la page quand le modal est ouvert */
+  .modal-open {
+    overflow: hidden;
+  }
+  

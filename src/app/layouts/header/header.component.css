@@ -1,0 +1,112 @@
+
+
+  #header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e1e4e8;
+    padding: 10px 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Logo */
+  .logo-img {
+    width: 30px;
+    height: auto;
+    margin-right: 10px;
+  }
+
+  .text-dark {
+    color: #333;
+  }
+
+  /* Search Bar */
+  .search-bar {
+    flex-grow: 1;
+    margin-left: 15px;
+  }
+
+  .search-input {
+    border-radius: 50px;
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+
+  .btn-search {
+    background-color: #007bff;
+    border: none;
+    border-radius: 50px;
+    padding: 8px 12px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+
+  .btn-search i {
+    color: white;
+  }
+
+  /* Tabs container */
+  .tabs-container {
+    margin-left: 30px;
+  }
+
+  .nav-pills .nav-link {
+    border-radius: 30px;
+    padding: 8px 15px;
+    font-size: 14px;
+    color: #007bff;
+    font-weight: 500;
+  }
+
+  .nav-pills .nav-link.active {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .nav-pills .nav-item {
+    margin-right: 10px;
+  }
+
+  /* Profile Dropdown */
+  .nav-profile {
+    display: flex;
+    align-items: center;
+    color: #333;
+    font-size: 14px;
+  }
+
+  .profile-img {
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+    border-radius: 50%;
+  }
+
+  .dropdown-menu {
+    width: 250px;
+    border-radius: 8px;
+  }
+
+  .dropdown-header {
+    background-color: #f8f9fa;
+    font-size: 14px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .dropdown-item {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .dropdown-item:hover {
+    background-color: #f0f0f0;
+  }
+
+  /* Mobile Menu Toggle */
+  .toggle-sidebar-btn {
+    font-size: 1.5rem;
+    color: #007bff;
+    cursor: pointer;
+  }
+
+

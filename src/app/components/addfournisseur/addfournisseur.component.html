@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Ajouter Fournisseur</title>
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <app-header></app-header>
+  <app-sidebar></app-sidebar>
+
+  <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Ajouter Fournisseur</h1>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Formulaire d'ajout de fournisseur</h5>
+
+              <form [formGroup]="fournisseurForm" (ngSubmit)="onSubmit()">
+                
+                <!-- Nom du Fournisseur -->
+                <div class="mb-3">
+                  <label for="nomFournisseur" class="form-label">Nom (FR)</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" id="nomFournisseur" class="form-control" formControlName="nomFournisseur" required placeholder="Entrer le nom">
+                  </div>
+                </div>
+                <!-- Certificat -->
+                <div class="mb-3">
+                  <label for="certificat" class="form-label">Certificat</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-patch-check"></i></span>
+                    <input type="text" id="certificat" class="form-control" formControlName="certificat" required placeholder="Entrer certificat">
+                  </div>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                  <label for="emailFournisseur" class="form-label">Email</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope-at"></i></span>
+                    <input type="email" id="emailFournisseur" class="form-control" formControlName="email" required placeholder="Example@domaine.com">
+                  </div>
+                </div>
+
+                <!-- Adresse -->
+                <div class="mb-3">
+                  <label for="adresseFournisseur" class="form-label">Adresse</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                    <input type="text" id="adresseFournisseur" class="form-control" formControlName="adresse" required placeholder="Entrer adresse">
+                  </div>
+                </div>
+
+                <!-- Téléphone -->
+                <div class="mb-3">
+                  <label for="telephoneFournisseur" class="form-label">Téléphone</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                    <input type="number" id="telephoneFournisseur" class="form-control" formControlName="telephone" required placeholder="Entrer numero">
+                  </div>
+                </div>
+                
+              
+                <div class="text-center mt-4">
+                  <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-person-add"></i> Ajouter Fournisseur
+                  </button>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+
+  <app-footer></app-footer>
+
+</body>
+
+</html>

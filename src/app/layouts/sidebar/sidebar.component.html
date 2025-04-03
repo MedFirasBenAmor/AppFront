@@ -1,0 +1,77 @@
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">
+            <i class="bi-speedometer2"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi-receipt"></i>
+            <span>Fournisseurs</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a routerLink="/ajouterfournisseurs" routerLinkActive="active">
+              <i class="bi bi-circle"> </i><span>Ajouter Fournisseur</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/fournisseurs" routerLinkActive="active">
+              <i class="bi bi-circle" ></i><span>Consulter Fournisseur</span>
+            </a>
+          </li>
+          
+        </ul>
+      </li><!-- End Components Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-box-seam"></i>
+            <span>Produits</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a routerLink="/ajouterproduit" routerLinkActive="active">
+              <i class="bi bi-circle" ></i><span>Ajouter Produit</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/produits" routerLinkActive="active">
+              <i class="bi bi-circle" ></i><span>Consulter Produit</span>
+            </a>
+          </li>
+
+          
+          
+        </ul>
+      </li><!-- End Forms Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-people"></i><span>Personnels</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a routerLink="/ajouterpersonnel" routerLinkActive="active">
+              <i class="bi bi-circle" ></i><span>Ajouter personnel</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="/personnels" routerLinkActive="active">
+              <i class="bi bi-circle" ></i><span>Consulter Personnel</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Tables Nav -->
+
+      
+
+    </ul>
+
+  </aside><!-- End Sidebar-->

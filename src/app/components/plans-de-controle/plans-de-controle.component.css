@@ -1,0 +1,16 @@
+.btn-retour {
+    margin-top: 20px; 
+}
+/* Espacer les colonnes du tableau */
+.table th, .table td {
+    padding: 12px 15px; 
+    vertical-align: middle; 
+}
+
+/* Alignement horizontal des boutons d'action */
+.action-buttons {
+    display: flex;
+    gap: 10px; 
+}
+
+
