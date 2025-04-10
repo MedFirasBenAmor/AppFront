@@ -50,16 +50,41 @@
                             </select>
                         </td>
                         <td>
-                            <input type="text" placeholder="Entrer la valeur" [(ngModel)]="plan.valeurMesuree"
-                                [ngClass]="{
-                                    'valid': plan.isValid === true, 
-                                    'invalid': plan.isValid === false
-                                }" (input)="validateValue(plan)" />
+                            <input 
+                            type="text" 
+                            placeholder="Entrer la valeur" 
+                            [(ngModel)]="plan.valeurMesuree"
+                            [readonly]="!plan.tolerance" 
+                            [ngClass]="{
+                              'valid': plan.isValid === true, 
+                              'invalid': plan.isValid === false
+                            }" 
+                            (input)="validateValue(plan)" 
+                          />
+                          
                            
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <p>Quantité pour {{ reference }} : {{ getQuantiteByReferenceAndNumBL(reference, numBL) }}</p>
+            <input 
+            type="number" 
+            placeholder="Quantité Contrôlée" 
+            [(ngModel)]="quantiteControlee" 
+            class="quantite-input" 
+          />
+          <div *ngIf="quantiteControlee !== null">
+            <p *ngIf="quantiteControlee > getQuantiteByReferenceAndNumBL(reference, numBL)" style="color: red;">
+              ⚠️ Quantité contrôlée supérieure à la quantité attendue !
+            </p>
+            <p *ngIf="quantiteControlee < getQuantiteByReferenceAndNumBL(reference, numBL)" style="color: orange;">
+              ⚠️ Quantité contrôlée inférieure à la quantité attendue.
+            </p>
+            <p *ngIf="quantiteControlee === getQuantiteByReferenceAndNumBL(reference, numBL)" style="color: green;">
+              ✅ Quantité contrôlée correcte.
+            </p>
+          </div>
         </div>
 
         <button *ngIf="produit && plansDeControle.length > 0" type="button" class="btn-suivant" (click)="openModal()">Suivant</button>
@@ -88,8 +113,10 @@
 
                     <div class="form-group">
                         <label>Numéro BL</label>
-                        <input type="text" name="numBL" [(ngModel)]="numBL" required>
+                        <input type="text" name="numBL" [(ngModel)]="lastNumBL" [value]="lastNumBL" readonly>
                     </div>
+                      
+                      
 
                     <div class="form-group">
                         <label>Date de Contrôle</label>

@@ -66,7 +66,8 @@
                     <th>Numéro BL</th>
                     <th>Date de réception</th>
                     <th>Fournisseur</th>
-                    <th>Produits</th>
+                    <th>Produits</th> <!-- Nouvelle colonne pour les produits -->
+                    <th>Références Produits</th> <!-- Nouvelle colonne pour les références -->
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -84,6 +85,13 @@
                       </ul>
                     </td>
                     <td>
+                      <ul>
+                        <li *ngFor="let produit of bl.produits">
+                          {{ produit.produit.reference }} <!-- Affichage des références des produits -->
+                        </li>
+                      </ul>
+                    </td>
+                    <td>
                       <button type="button" class="btn btn-primary">
                         <i class="bi bi-pencil"></i>
                       </button>
@@ -96,10 +104,15 @@
               </table>
 
             </div>
+            <div *ngIf="lastNumBL">
+              <p>Dernier numéro de BL pour cette référence : {{ lastNumBL }}</p>
+            </div>
           </div>
         </div>
       </div>
+      
     </section>
+    
 
   </main>
 

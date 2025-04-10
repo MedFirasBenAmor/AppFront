@@ -18,7 +18,14 @@ export class ScanneService {
   getPlansDeControleByProduit(idProduit: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${idProduit}/plansDeControle`);
   }
-
+  imprimerEtiquetteVerte(etiquetteData: any) {
+    return this.http.post('http://localhost:8080/api/etiquettes/imprimer', etiquetteData);
+  }
+  imprimerFicheDeRefus(fiche: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/ficheRefus/imprimer`, fiche);
+  }
+  
+  
   enregistrerControle(data: any): Observable<string> {
     const token = localStorage.getItem('token'); // Vérifier que le token est bien récupéré
   

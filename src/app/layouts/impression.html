@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Plan de Contrôle</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script>
+        window.onload = function () {
+            window.print(); // Imprime automatiquement la page une fois chargée
+        };
+    </script>
+    <style>
+        @media print {
+            body * { visibility: hidden; }
+            #planControleTable, #planControleTable * { visibility: visible; }
+            #planControleTable { position: absolute; left: 0; top: 0; width: 100%; }
+            .btn { display: none; }
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+
+<body>
+    <h1>Plan de Contrôle</h1>
+    <table id="planControleTable">
+        <thead>
+            <tr>
+                <th>Caractéristique</th>
+                <th>Donnée Technique</th>
+                <th>Tolérance (+/-)</th>
+                <th>Fréquence et Taille de Prélèvement</th>
+                <th>Moyen de Contrôle</th>
+                <th>Méthode de Contrôle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Exemple 1</td>
+                <td>Valeur 1</td>
+                <td>± 0.5</td>
+                <td>10 échantillons</td>
+                <td>Micromètre</td>
+                <td>Mesure directe</td>
+            </tr>
+            <!-- Ajoute d'autres lignes dynamiquement si nécessaire -->
+        </tbody>
+    </table>
+</body>
+</html>

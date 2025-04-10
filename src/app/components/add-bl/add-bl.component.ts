@@ -1,4 +1,3 @@
-// add-bl.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -28,10 +27,6 @@ export class AddBlComponent implements OnInit {
     // Initialisation du formulaire
     this.blForm = this.fb.group({
       numBL: ['', Validators.required],
-      /** 
-       * Form control for the reception date of the delivery note (Bon de Livraison)
-       * Requires a date to be selected and cannot be null
-       */
       dateReception: ['', Validators.required],
       idFournisseur: [null, Validators.required],
       produits: this.fb.array([])  // Array pour les produits
@@ -57,26 +52,46 @@ export class AddBlComponent implements OnInit {
   addProduit(): void {
     const produitFormGroup = this.fb.group({
       idProduit: [null, Validators.required],
-      quantité: [0, [Validators.required, Validators.min(1)]]
+      quantité: [0, [Validators.required, Validators.min(1)]],
+      reference: ['']  // Ajouter la référence
     });
     this.produitsFormArray.push(produitFormGroup);
+  }
+
+  // Mise à jour de la référence lorsqu'un produit est sélectionné
+  onProduitChange(index: number): void {
+    const produitId = this.produitsFormArray.at(index).get('idProduit')?.value;
+    const produit = this.produits.find(p => p.idProduit === produitId);
+    if (produit) {
+      this.produitsFormArray.at(index).get('reference')?.setValue(produit.reference);
+    }
   }
 
   // Soumettre le formulaire
   onSubmit(): void {
     if (this.blForm.valid) {
-      const bl = {
+      const blRequest = {
         numBL: this.blForm.value.numBL,
         dateReception: this.blForm.value.dateReception 
-        ? new Date(this.blForm.value.dateReception).toISOString().split('T')[0] 
-        : null,
-          
+          ? new Date(this.blForm.value.dateReception).toISOString().split('T')[0] 
+          : null,
         idFournisseur: this.blForm.value.idFournisseur,
-        produits: this.blForm.value.produits
+        produits: this.blForm.value.produits.map((produit: any) => {
+          // Remplir la référence avec l'ID du produit sélectionné
+          const selectedProduit = this.produits.find(p => p.idProduit === produit.idProduit);
+          produit.reference = selectedProduit ? selectedProduit.reference : '';
+          return {
+            idProduit: produit.idProduit,
+            quantité: produit.quantité,
+            reference: produit.reference // inclure la référence ici
+          };
+        })
       };
-      this.blService.addBl(bl).subscribe(
+
+      // Appel du service pour créer le BL dans le backend
+      this.blService.addBl(blRequest).subscribe(
         () => {
-          console.log("Données envoyées au backend :", this.blForm.value);
+          console.log("Données envoyées au backend :", blRequest);
 
           alert('Bon de livraison créé avec succès');
           this.router.navigate(['/add-bl']);  // Rediriger vers la liste des BL

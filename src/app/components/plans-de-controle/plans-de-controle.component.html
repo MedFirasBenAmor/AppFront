@@ -13,6 +13,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
+        .img-right { float: right; margin-left: 20px; }
+
         /* Personnaliser les couleurs des boutons */
         .btn-info {
             background-color: #17a2b8;
@@ -81,6 +83,7 @@
         <div class="pagetitle">
             <h1>Plan de Contrôle</h1>
         </div><!-- End Page Title -->
+        <button class="btn btn-success" (click)="printPlanDeControle()">Imprimer</button>
 
         <section class="section">
             <div class="row">
@@ -183,6 +186,7 @@
                             <!-- Default Table -->
                             <table id="planControleTable" class="table">
                                 <thead class="table-light">
+                                    
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Caractéristique</th>
